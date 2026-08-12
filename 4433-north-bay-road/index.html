@@ -310,6 +310,63 @@ tr.is-cap td{background:var(--surface-2)}
 .ph i{position:relative;font-family:var(--mono);font-style:normal;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .gallery-note{margin-top:16px;font-size:.85rem;color:var(--muted);max-width:62ch}
 
+/* caption + click target over each shot */
+.shot-cap{
+  position:absolute;left:0;right:0;bottom:0;z-index:3;
+  padding:26px 14px 11px;
+  font-family:var(--mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:#EAF0EF;
+  background:linear-gradient(to top,rgba(6,12,15,.82),transparent);
+  opacity:0;transition:opacity .22s ease;pointer-events:none;
+}
+.shot-open{
+  position:absolute;inset:0;z-index:4;
+  border:0;padding:0;background:transparent;cursor:zoom-in;
+}
+.shot:hover .shot-cap,.shot-open:focus-visible + .shot-cap,.shot:focus-within .shot-cap{opacity:1}
+.shot-open:focus-visible{outline:2px solid var(--brass);outline-offset:-3px}
+
+/* full-bleed photograph band */
+.reveal{position:relative;height:clamp(320px,62vh,620px);overflow:hidden;background:var(--surface-2)}
+.reveal img{width:100%;height:100%;object-fit:cover}
+.reveal-plate{
+  position:absolute;left:0;right:0;bottom:0;
+  padding:clamp(28px,5vw,52px) var(--gut);
+  background:linear-gradient(to top,rgba(6,12,15,.9),rgba(6,12,15,.35) 55%,transparent);
+}
+.reveal-plate div{max-width:var(--col);margin-inline:auto;display:flex;flex-direction:column;gap:.4rem}
+.reveal-plate p{margin:0;color:#EAF0EF;font-family:var(--serif);font-size:clamp(1.15rem,2.6vw,1.75rem);line-height:1.24;max-width:24ch}
+.reveal-plate span{font-family:var(--mono);font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-soft)}
+
+/* floor plan */
+.plan{margin-top:clamp(26px,4vw,44px);border:1px solid var(--line-soft);border-radius:3px;background:var(--surface-2);overflow:hidden}
+.plan img{width:100%;background:#fff}
+.plan figcaption{padding:12px clamp(14px,2vw,20px);font-family:var(--mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-top:1px solid var(--line-soft)}
+
+/* lightbox */
+.lb{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(6,11,14,.95);
+  display:flex;flex-direction:column;
+}
+.lb[hidden]{display:none}
+.lb-bar{
+  display:flex;align-items:center;gap:14px;
+  padding:12px clamp(14px,3vw,26px);border-bottom:1px solid rgba(234,240,239,.12);
+}
+.lb-cap{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:#EAF0EF}
+.lb-count{font-family:var(--mono);font-size:.68rem;color:#8A9BA1;margin-left:auto}
+.lb button{
+  background:transparent;border:1px solid rgba(234,240,239,.28);color:#EAF0EF;
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;
+  width:34px;height:34px;border-radius:2px;cursor:pointer;flex:none;
+  transition:border-color .18s,background .18s;
+}
+.lb button:hover{border-color:var(--brass);background:rgba(217,164,65,.14)}
+.lb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(12px,2.5vw,26px);min-height:0}
+.lb-stage img{max-width:100%;max-height:100%;object-fit:contain;border-radius:2px}
+.lb-nav{display:flex;gap:10px;justify-content:center;padding:0 0 clamp(16px,3vw,26px)}
+
 /* ---------- media ---------- */
 .press{display:grid;gap:14px}
 @media (min-width:780px){.press{grid-template-columns:repeat(2,1fr)}}
@@ -400,7 +457,7 @@ form button:hover{background:var(--brass-soft)}
     <div class="hero-top">
       <p class="addr">4433 North Bay Road <span>·</span> Miami Beach, Florida 33140 <span>· Billionaire's Row</span></p>
       <h1>The house that outgrew the database.</h1>
-      <p class="lede">A three-bedroom bayfront residence on Miami's richest street. Listed at $7.5&nbsp;million, reset to $11.2&nbsp;million, then raised 50% every business day it went unsold. Seven business days later it had passed the highest advertised home price ever recorded. Then the MLS ran out of digits.</p>
+      <p class="lede">A three-bedroom residence on Miami's richest street. Listed at $7.5&nbsp;million, reset to $11.2&nbsp;million, then raised 50% every business day it went unsold. Seven business days later it had passed the highest advertised home price ever recorded. Then the MLS ran out of digits.</p>
     </div>
 
     <div class="readout">
@@ -421,6 +478,17 @@ form button:hover{background:var(--brass-soft)}
   </div>
 </header>
 
+<!-- ============ THE HOUSE, REVEALED ============ -->
+<section class="reveal" aria-label="The residence at dusk">
+  <img src="photos/photo-1.jpg" alt="4433 North Bay Road at dusk, the lit pool and glazed elevation framed by palms" fetchpriority="high" decoding="async">
+  <div class="reveal-plate">
+    <div>
+      <span>The actual house</span>
+      <p>Three bedrooms, 3,534 square feet, and a pool behind a hedge on North Bay Road.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ============ LEDGER ============ -->
 <section class="band" aria-label="Listing at a glance">
   <div class="col">
@@ -439,7 +507,7 @@ form button:hover{background:var(--brass-soft)}
       </div>
       <div class="cell">
         <dt>Residence</dt>
-        <dd>3 bd · 3.5 ba<small>3,534 sq ft on a 6,750 sq ft bayfront lot</small></dd>
+        <dd>3 bd · 3.5 ba<small>3,534 sq ft on a 6,750 sq ft gated lot</small></dd>
       </div>
     </dl>
   </div>
@@ -510,26 +578,36 @@ form button:hover{background:var(--brass-soft)}
 
     <div class="two">
       <div class="prose">
-        <p>Built in 2015 by developer Todd Michael Glaser with architecture by Domo, 4433 North Bay Road is a two-storey contemporary set on an elevated bayfront site — a deliberate choice on a barrier island, and one that increasingly reads as infrastructure rather than styling.</p>
+        <p>Built in 2015 by developer Todd Michael Glaser with architecture by Domo, 4433 North Bay Road is a two-storey contemporary on a gated, fully hedged lot — set behind a motor court, with the pool and lap pool wrapping the garden side and no neighbour with a view in.</p>
+        <p>The ground floor is planned as four separate rooms rather than one open volume: a double-height family room with a stone fireplace, a dining room, the kitchen, and — unusually for the size — a dedicated 19′8″ × 22′10″ music room. All three bedrooms upstairs are en suite; two open onto balconies.</p>
         <p>Barnes and his wife took it down to the studs in 2025 and rebuilt it as a turn-key acquisition: bespoke furnishings, rare design pieces and the art stay with the house. Before the escalation began, that reimagined residence was brought to market at $9,900,000 — roughly $2,786 per square foot, which is what a serious conversation about this property has historically sounded like.</p>
-        <p>Three bedrooms, three and a half baths, 3,534 square feet on a 6,750 square foot lot. It is not the largest house on North Bay Road. It is, at the moment, the loudest.</p>
+        <p>It is not the largest house on North Bay Road. It is, at the moment, the loudest.</p>
       </div>
 
       <dl class="spec">
-        <div><dt>Bedrooms</dt><dd>3</dd></div>
+        <div><dt>Bedrooms</dt><dd>3, all en suite</dd></div>
         <div><dt>Bathrooms</dt><dd>3.5</dd></div>
         <div><dt>Interior</dt><dd>3,534 sq ft</dd></div>
         <div><dt>Lot</dt><dd>6,750 sq ft</dd></div>
+        <div><dt>Main bedroom</dt><dd>29′5″ × 16′10″</dd></div>
+        <div><dt>Music room</dt><dd>19′8″ × 22′10″</dd></div>
+        <div><dt>Family room</dt><dd>19′8″ × 20′1″</dd></div>
+        <div><dt>Living</dt><dd>18′1″ × 19′0″</dd></div>
         <div><dt>Built</dt><dd>2015</dd></div>
         <div><dt>Reimagined</dt><dd>2025</dd></div>
         <div><dt>Architecture</dt><dd>Domo</dd></div>
         <div><dt>Original developer</dt><dd>Todd Michael Glaser</dd></div>
-        <div><dt>Structure</dt><dd>Elevated construction</dd></div>
+        <div><dt>Outdoor</dt><dd>Pool + lap pool</dd></div>
         <div><dt>Furnishings</dt><dd>Included, turn-key</dd></div>
         <div><dt>MLS</dt><dd>TB8474005</dd></div>
         <div><dt>Listed</dt><dd>16 Jan 2026</dd></div>
       </dl>
     </div>
+
+    <figure class="plan">
+      <img src="photos/photo-71.jpg" alt="Floor plan of 4433 North Bay Road: first floor with family, dining, kitchen, music and living rooms; second floor with three en-suite bedrooms and two balconies; site plan showing the residence, pool area and lap pool within a hedged lot." loading="lazy" decoding="async">
+      <figcaption>First floor, second floor and site plan · total approx. floor area 3,534 sq ft</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -552,9 +630,9 @@ form button:hover{background:var(--brass-soft)}
         <p>A commissioned pair, carved from solid marble, valued at $50,000. They do not move, which is rather the point of them.</p>
       </article>
       <article class="feat">
-        <span class="tag">Structure</span>
-        <h3>Elevated construction</h3>
-        <p>The house sits on raised ground on a barrier island — built for resilience and, in the seller's framing, for generational hold rather than a five-year flip.</p>
+        <span class="tag">Grounds</span>
+        <h3>A pool and a lap pool</h3>
+        <p>Two bodies of water on a 6,750 sq ft lot: a wide pool off the terrace and a separate lap pool running the length of the side garden, both inside a full hedge line.</p>
       </article>
     </div>
   </div>
@@ -590,7 +668,7 @@ form button:hover{background:var(--brass-soft)}
         <div><dt>Avg list, Feb 2026</dt><dd>$25,199,167</dd></div>
         <div><dt>Avg list, Feb 2025</dt><dd>$11,812,500</dd></div>
         <div><dt>Beckham estate</dt><dd>≈ $72,000,000</dd></div>
-        <div><dt>Frontage</dt><dd>Biscayne Bay</dd></div>
+        <div><dt>This lot</dt><dd>Gated, hedged</dd></div>
         <div><dt>Distance to ocean</dt><dd>&lt; 1 mile</dd></div>
       </dl>
     </div>
@@ -659,6 +737,20 @@ form button:hover{background:var(--brass-soft)}
     </div>
   </div>
 </section>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="lb" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photograph viewer">
+  <div class="lb-bar">
+    <button class="lb-close" type="button" aria-label="Close viewer">✕</button>
+    <span class="lb-cap" id="lbCap"></span>
+    <span class="lb-count num" id="lbCount"></span>
+  </div>
+  <div class="lb-stage"><img id="lbImg" alt=""></div>
+  <div class="lb-nav">
+    <button class="lb-prev" type="button" aria-label="Previous photograph">←</button>
+    <button class="lb-next" type="button" aria-label="Next photograph">→</button>
+  </div>
+</div>
 
 <footer class="foot">
   <div class="col foot-in">
@@ -1030,16 +1122,39 @@ function drawChart(){
    9. Gallery — real photos when present, designed slots when not
    --------------------------------------------------------------- */
 const SHOTS = [
-  { file:"01-front-elevation.jpg",  alt:"Front elevation of 4433 North Bay Road",       cap:"Front elevation",            cls:"shot--hero" },
-  { file:"02-bay-rear.jpg",         alt:"Rear of the house facing Biscayne Bay",        cap:"Bay elevation",              cls:"shot--wide" },
-  { file:"03-pool-terrace.jpg",     alt:"Pool terrace with marble lounge chairs",       cap:"Pool terrace",               cls:"shot--wide" },
-  { file:"04-great-room.jpg",       alt:"Double-height great room",                     cap:"Great room",                 cls:"" },
-  { file:"05-kitchen.jpg",          alt:"Kitchen",                                      cap:"Kitchen",                    cls:"" },
-  { file:"06-vintners-wall.jpg",    alt:"The Vintner's Wall wine gallery",              cap:"The Vintner's Wall",         cls:"" },
-  { file:"07-primary-suite.jpg",    alt:"Primary bedroom suite",                        cap:"Primary suite",              cls:"" },
-  { file:"08-dock.jpg",             alt:"Private dock on Biscayne Bay",                 cap:"Dock & waterfront",          cls:"" },
-  { file:"09-aerial.jpg",           alt:"Aerial view of North Bay Road",                cap:"Aerial, North Bay Road",     cls:"" }
+  { f:"photo-3.jpg",  cap:"Front elevation",           alt:"Front elevation of 4433 North Bay Road, with the house number on the facade", cls:"shot--wide" },
+  { f:"photo-2.jpg",  cap:"Entry court at dusk",       alt:"Gated entry court and glazed facade lit at dusk",                             cls:"shot--wide" },
+  { f:"photo-23.jpg", cap:"Pool and garden",           alt:"Swimming pool and planted garden alongside the house" },
+  { f:"photo-18.jpg", cap:"Pool terrace at dusk",      alt:"Lit pool terrace at dusk framed by palms" },
+  { f:"photo-16.jpg", cap:"Hand-carved marble loungers", alt:"Sculpted marble poolside lounge chairs beside the pool" },
+  { f:"photo-22.jpg", cap:"Evening elevation",         alt:"The house and pool from the garden at blue hour",                             cls:"shot--wide" },
+  { f:"photo-27.jpg", cap:"The lap pool",              alt:"Long lap pool running the length of the side garden",                         cls:"shot--wide" },
+  { f:"photo-7.jpg",  cap:"Family room",               alt:"Double-height family room with tufted sectional and stone fireplace" },
+  { f:"photo-6.jpg",  cap:"Family room, pool beyond",  alt:"Family room looking through glass doors to the pool" },
+  { f:"photo-25.jpg", cap:"Poolside living",           alt:"Covered poolside terrace with timber ceiling" },
+  { f:"photo-12.jpg", cap:"Music room",                alt:"Music room with grand piano and oversized chess set",                          cls:"shot--wide" },
+  { f:"photo-14.jpg", cap:"The grand piano",           alt:"White grand piano on a dark circular rug",                                     cls:"shot--wide" },
+  { f:"photo-31.jpg", cap:"Dining",                    alt:"Dining table set against a glazed wall facing the pool" },
+  { f:"photo-35.jpg", cap:"Dining at dusk",            alt:"Dining and living space at dusk with the pool lit outside" },
+  { f:"photo-30.jpg", cap:"Kitchen",                   alt:"Kitchen with island seating and integrated appliances" },
+  { f:"photo-36.jpg", cap:"Kitchen island",            alt:"Marble kitchen island with range and extractor" },
+  { f:"photo-42.jpg", cap:"Floating stair",            alt:"Cantilevered timber stair rising through the double-height volume" },
+  { f:"photo-43.jpg", cap:"Gallery hall",              alt:"Upper hall hung with a large landscape canvas" },
+  { f:"photo-57.jpg", cap:"Main bedroom",              alt:"Main bedroom, 29 by 17 feet, with garden outlook",                              cls:"shot--wide" },
+  { f:"photo-63.jpg", cap:"Main en suite",             alt:"Main en suite with stone wall, twin basins and freestanding tub",               cls:"shot--wide" },
+  { f:"photo-66.jpg", cap:"Freestanding tub",          alt:"Freestanding tub against a book-matched stone wall" },
+  { f:"photo-58.jpg", cap:"Bedroom two",               alt:"Second bedroom with en suite and balcony access" },
+  { f:"photo-49.jpg", cap:"Bedroom three",             alt:"Third bedroom with arched mirror and en suite" },
+  { f:"photo-54.jpg", cap:"Fitness room",              alt:"Fitness room with treadmill and exercise bike" },
+  { f:"photo-51.jpg", cap:"Second-floor balcony",      alt:"Narrow second-floor balcony running along the glazed elevation" },
+  { f:"photo-69.jpg", cap:"The neighbourhood from the bay", alt:"Aerial view over Biscayne Bay toward Miami Beach and the downtown skyline" }
 ];
+
+/* Optional embed map. The site normally loads photos from /photos; a
+   self-contained single-file build injects window.__EMBED__ with data URIs. */
+const EMBED = window.__EMBED__ || null;
+const thumbSrc = f => EMBED && EMBED[f] ? EMBED[f] : "photos/thumbs/" + f;
+const fullSrc  = f => EMBED && EMBED[f] ? EMBED[f] : "photos/" + f;
 
 (function buildGallery(){
   const grid = document.getElementById("galleryGrid");
@@ -1048,8 +1163,9 @@ const SHOTS = [
 
   SHOTS.forEach((s, i) => {
     const fig = document.createElement("figure");
-    fig.className = "shot " + s.cls;
+    fig.className = "shot " + (s.cls || "");
     fig.style.margin = "0";
+    fig.dataset.index = i;
 
     const ph = document.createElement("div");
     ph.className = "ph";
@@ -1058,7 +1174,6 @@ const SHOTS = [
         '<path d="M0 ' + (104 + (i % 3) * 6) + ' H200" stroke="currentColor" stroke-width="1" fill="none"/>' +
         '<path d="M28 104 V' + (58 + (i % 4) * 7) + ' H92 V104" stroke="currentColor" stroke-width="1" fill="none"/>' +
         '<path d="M92 ' + (72 + (i % 4) * 5) + ' H158 V104" stroke="currentColor" stroke-width="1" fill="none"/>' +
-        '<path d="M44 104 V86 H68 V104" stroke="currentColor" stroke-width="1" fill="none"/>' +
       '</svg>';
     const b = document.createElement("b"); b.textContent = s.cap;
     const em = document.createElement("i"); em.textContent = "Photo pending";
@@ -1070,19 +1185,76 @@ const SHOTS = [
     img.loading = "lazy";
     img.decoding = "async";
     img.addEventListener("error", () => { img.remove(); missing++; render(); });
-    img.src = "photos/" + s.file;
+    img.src = thumbSrc(s.f);
     fig.appendChild(img);
+
+    const cap = document.createElement("figcaption");
+    cap.className = "shot-cap";
+    cap.textContent = s.cap;
+    fig.appendChild(cap);
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "shot-open";
+    btn.setAttribute("aria-label", "View " + s.cap + " full size");
+    btn.addEventListener("click", () => openLightbox(i));
+    fig.appendChild(btn);
 
     grid.appendChild(fig);
   });
 
   function render(){
     note.textContent = missing === 0
-      ? ""
-      : missing + " of " + SHOTS.length + " images are placeholders. Drop the photographs into /photos using the filenames in photos/README.md and they appear here automatically — no code changes needed.";
+      ? "Photography of the residence as currently presented. Select any image to view it full size."
+      : missing + " of " + SHOTS.length + " images are missing from /photos/thumbs.";
   }
   render();
 })();
+
+/* ---------------------------------------------------------------
+   9b. Lightbox — full-size viewing with keyboard navigation
+   --------------------------------------------------------------- */
+const lb      = document.getElementById("lightbox");
+const lbImg   = document.getElementById("lbImg");
+const lbCap   = document.getElementById("lbCap");
+const lbCount = document.getElementById("lbCount");
+let lbIndex = 0, lbLastFocus = null;
+
+function showLightbox(i){
+  lbIndex = (i + SHOTS.length) % SHOTS.length;
+  const s = SHOTS[lbIndex];
+  lbImg.src = fullSrc(s.f);         // full-resolution original
+  lbImg.alt = s.alt;
+  lbCap.textContent = s.cap;
+  lbCount.textContent = (lbIndex + 1) + " / " + SHOTS.length;
+}
+function openLightbox(i){
+  lbLastFocus = document.activeElement;
+  showLightbox(i);
+  lb.hidden = false;
+  document.body.style.overflow = "hidden";
+  lb.querySelector(".lb-close").focus();
+}
+function closeLightbox(){
+  lb.hidden = true;
+  lbImg.removeAttribute("src");   // "" would re-request the page URL
+  document.body.style.overflow = "";
+  if (lbLastFocus) lbLastFocus.focus();
+}
+
+lb.addEventListener("click", e => {
+  if (e.target === lb || e.target.classList.contains("lb-stage")) closeLightbox();
+});
+lb.querySelector(".lb-close").addEventListener("click", closeLightbox);
+lb.querySelector(".lb-prev").addEventListener("click", () => showLightbox(lbIndex - 1));
+lb.querySelector(".lb-next").addEventListener("click", () => showLightbox(lbIndex + 1));
+
+document.addEventListener("keydown", e => {
+  if (lb.hidden) return;
+  if (e.key === "Escape")     closeLightbox();
+  if (e.key === "ArrowLeft")  showLightbox(lbIndex - 1);
+  if (e.key === "ArrowRight") showLightbox(lbIndex + 1);
+});
 
 /* ---------------------------------------------------------------
    10. Press clippings

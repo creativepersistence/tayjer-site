@@ -1,43 +1,60 @@
 # Photos — 4433 North Bay Road
 
-The gallery on `../index.html` looks for these nine files in this folder. Any file
-that is present is used; any file that is missing renders as a styled "photo
-pending" tile instead. **No code changes are needed** — drop the files in with
-these exact names and they appear.
+71 listing photographs of the property, watermarked `A11886801 © Miami MLS® 2025`.
 
-| Filename | Slot | Grid size |
-|---|---|---|
-| `01-front-elevation.jpg` | Front elevation | full width, 16:7 |
-| `02-bay-rear.jpg` | Bay elevation (rear, facing Biscayne Bay) | half width, 4:3 |
-| `03-pool-terrace.jpg` | Pool terrace | half width, 4:3 |
-| `04-great-room.jpg` | Great room | third width, 4:3 |
-| `05-kitchen.jpg` | Kitchen | third width, 4:3 |
-| `06-vintners-wall.jpg` | The Vintner's Wall (wine gallery) | third width, 4:3 |
-| `07-primary-suite.jpg` | Primary suite | third width, 4:3 |
-| `08-dock.jpg` | Dock & waterfront | third width, 4:3 |
-| `09-aerial.jpg` | Aerial, North Bay Road | third width, 4:3 |
+```
+photos/
+├── photo-1.jpg … photo-71.jpg    full size, 1600px wide — used by the lightbox
+└── thumbs/                        900px, q78 — used by the gallery grid
+```
 
-Images are cropped with `object-fit: cover`, so anything close to the listed
-aspect ratio works. Aim for ~2000px on the long edge — large enough for retina,
-small enough that the page stays quick.
+The gallery loads `thumbs/`, and the lightbox loads the full-size original of the
+same filename. Any thumb that's missing renders a "photo pending" tile instead,
+so the page never breaks on a gap.
 
-To change the slots, captions or ordering, edit the `SHOTS` array in
-`../index.html` (search for `const SHOTS`).
+## Changing what's shown
 
-## Where to source them
+The gallery is driven by the `SHOTS` array in `../index.html` (search for
+`const SHOTS`). Each entry is:
 
-This session had no outbound network access, so no photographs could be
-downloaded. The listing images live on:
+```js
+{ f:"photo-3.jpg", cap:"Front elevation", alt:"…", cls:"shot--wide" }
+```
 
-- Stellar MLS listing **TB8474005** — the current listing feed, syndicated to
-  Zillow, Trulia, Redfin, Compass, Coldwell Banker, William Raveis and
-  ONE Sotheby's
-- Redfin's record for the earlier MLS **A11346792** (2023 listing)
-- The owner's press release for the 2025 reimagining (Under30CEO / MSN)
+`cls` is optional: omit it for a third-width tile, `shot--wide` for half width,
+`shot--hero` for full width. To add a photo that isn't in the current selection,
+add an entry and generate its thumbnail:
 
-If you have rights to the MLS photo set, that is the fastest path — it is the
-same set every syndicator is showing. Otherwise, request them from the seller.
+```bash
+python3 -c "
+from PIL import Image
+im = Image.open('photo-NN.jpg').convert('RGB')
+im.thumbnail((900, 900), Image.LANCZOS)
+im.save('thumbs/photo-NN.jpg', 'JPEG', quality=78, optimize=True, progressive=True)"
+```
 
-**Check the licence before publishing.** MLS photos are typically owned by the
-listing photographer or brokerage and licensed only for the listing's own
-marketing; press-article images usually are not licensed for reuse at all.
+## What's in the set
+
+26 of the 71 are currently selected for the gallery. Also used outside it:
+
+| File | Where |
+|---|---|
+| `photo-1.jpg` | full-bleed band beneath the hero |
+| `photo-71.jpg` | floor plan, in The Residence |
+| `photo-70.jpg` | second floor-plan variant, unused |
+| `photo-68.jpg` | overhead aerial — the roof is masked in the original, so unused |
+
+The remaining ~40 are alternate angles of rooms already represented.
+
+## Two notes on accuracy
+
+**The property is not waterfront.** The overhead aerial (`photo-68.jpg`) and the
+site plan (`photo-71.jpg`) both show an interior lot fronting North Bay Road,
+hedged on all sides, with a pool and a lap pool — no bay frontage and no dock.
+Earlier copy on the page described it as bayfront; that has been corrected.
+Don't reintroduce it.
+
+**No photograph of "The Vintner's Wall."** The 150-bottle wine gallery described
+in the owner's press release doesn't appear anywhere in this set. The feature is
+still listed on the page because it's sourced from the release, but it's worth
+confirming before the page goes live.
