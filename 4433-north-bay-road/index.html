@@ -1,0 +1,1204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>4433 North Bay Road</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="4433 North Bay Road, Miami Beach — the Billionaire's Row residence whose asking price rose 50% every business day until it overflowed the MLS.">
+<style>
+/* ============================================================
+   4433 North Bay Road
+   Dark-first. Tokens carry every color; components never hard-code.
+   ============================================================ */
+
+:root{
+  /* ground + surfaces: deep bay water at night, teal-biased neutrals */
+  --ground:#0B1418;
+  --surface:#111E23;
+  --surface-2:#16272D;
+  --line:#1F343B;
+  --line-soft:#182A31;
+
+  --ink:#EAF0EF;
+  --ink-dim:#B9C8CB;
+  --muted:#7E9299;
+
+  --brass:#D9A441;
+  --brass-soft:#F0C877;
+  --brass-dim:#8A6A2C;
+  --bay:#49A19E;
+
+  --shadow:0 18px 50px -22px rgba(0,0,0,.85);
+
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono","Roboto Mono",Menlo,Consolas,monospace;
+
+  --col:1120px;
+  --gut:clamp(20px,5vw,48px);
+}
+
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --ground:#EEF2F1;
+    --surface:#FFFFFF;
+    --surface-2:#F5F8F7;
+    --line:#D0DAD8;
+    --line-soft:#E1E8E7;
+
+    --ink:#0B1A1F;
+    --ink-dim:#2C4147;
+    --muted:#5B6F75;
+
+    --brass:#8E6511;
+    --brass-soft:#6E4E0B;
+    --brass-dim:#C9A96A;
+    --bay:#186C6A;
+
+    --shadow:0 14px 40px -24px rgba(11,26,31,.4);
+  }
+}
+:root[data-theme="light"]{
+  --ground:#EEF2F1;
+  --surface:#FFFFFF;
+  --surface-2:#F5F8F7;
+  --line:#D0DAD8;
+  --line-soft:#E1E8E7;
+
+  --ink:#0B1A1F;
+  --ink-dim:#2C4147;
+  --muted:#5B6F75;
+
+  --brass:#8E6511;
+  --brass-soft:#6E4E0B;
+  --brass-dim:#C9A96A;
+  --bay:#186C6A;
+
+  --shadow:0 14px 40px -24px rgba(11,26,31,.4);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+[id]{scroll-margin-top:68px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:clamp(15px,1.05vw,17px);
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:2px}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+
+/* ---------- shared rhythm ---------- */
+.col{max-width:var(--col);margin-inline:auto;padding-inline:var(--gut)}
+.band{padding-block:clamp(56px,8vw,104px);border-top:1px solid var(--line-soft)}
+.band--alt{background:var(--surface)}
+
+.eyebrow{
+  font-family:var(--mono);
+  font-size:.7rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--brass);
+  margin:0;
+}
+.eyebrow--quiet{color:var(--muted)}
+
+h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.1rem,5.6vw,4rem);line-height:1.02;letter-spacing:-.02em}
+h2{font-size:clamp(1.55rem,3.2vw,2.4rem);line-height:1.08;letter-spacing:-.015em}
+h3{font-size:1.06rem;line-height:1.3;letter-spacing:-.005em}
+
+.lede{font-size:clamp(1.02rem,1.5vw,1.18rem);color:var(--ink-dim);max-width:62ch;margin:0}
+.prose p{max-width:64ch;color:var(--ink-dim);margin:0 0 1.05em}
+.prose p:last-child{margin-bottom:0}
+
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+
+.head{display:flex;flex-direction:column;gap:.55rem;margin-bottom:clamp(28px,4vw,48px)}
+
+/* ---------- nav ---------- */
+.nav{
+  position:sticky;top:0;z-index:60;
+  background:var(--ground);
+  background:color-mix(in srgb,var(--ground) 86%,transparent);
+  backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid var(--line-soft);
+}
+.nav-in{
+  max-width:var(--col);margin-inline:auto;padding:12px var(--gut);
+  display:flex;align-items:center;gap:clamp(14px,3vw,32px);
+}
+.brand{font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;white-space:nowrap}
+.brand b{color:var(--brass);font-weight:600}
+.nav-links{display:none;gap:clamp(14px,2.4vw,26px);margin-left:auto}
+.nav-links a{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;padding-block:4px;
+  border-bottom:1px solid transparent;transition:color .18s,border-color .18s;
+}
+.nav-links a:hover{color:var(--ink);border-bottom-color:var(--brass)}
+@media (min-width:820px){.nav-links{display:flex}}
+.theme-btn{
+  margin-left:auto;background:transparent;border:1px solid var(--line);color:var(--muted);
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;
+  padding:6px 11px;border-radius:2px;cursor:pointer;transition:color .18s,border-color .18s;
+}
+@media (min-width:820px){.theme-btn{margin-left:0}}
+.theme-btn:hover{color:var(--ink);border-color:var(--brass-dim)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;padding-block:clamp(52px,9vw,110px) clamp(30px,4vw,48px)}
+#gridcanvas{position:absolute;inset:0;width:100%;height:100%;opacity:.5;pointer-events:none}
+.hero-in{position:relative;display:flex;flex-direction:column;gap:clamp(24px,3.4vw,40px)}
+.hero-top{display:flex;flex-direction:column;gap:.7rem}
+.addr{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--brass);margin:0}
+.addr span{color:var(--muted)}
+
+/* the price readout — the thesis of the page */
+.readout{
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding-block:clamp(18px,2.6vw,30px);
+  display:flex;flex-direction:column;gap:.7rem;
+}
+.readout-label{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem 1.1rem;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+}
+.readout-scroll{overflow-x:auto;scrollbar-width:thin;padding-bottom:2px}
+.price{
+  font-family:var(--mono);font-variant-numeric:tabular-nums;
+  font-size:clamp(1.7rem,7.3vw,4.6rem);
+  line-height:1;letter-spacing:-.045em;font-weight:600;
+  color:var(--brass);white-space:nowrap;margin:0;
+}
+.cap-tick{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ground);background:var(--brass);padding:4px 9px;border-radius:2px;
+  opacity:0;transform:translateY(-3px);transition:opacity .5s ease,transform .5s ease;
+}
+.cap-tick.on{opacity:1;transform:none}
+.readout-note{font-size:.9rem;color:var(--muted);max-width:60ch;margin:0}
+
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.btn{
+  font-family:var(--mono);font-size:.71rem;letter-spacing:.15em;text-transform:uppercase;
+  text-decoration:none;padding:13px 22px;border-radius:2px;border:1px solid var(--brass);
+  transition:background .18s,color .18s,border-color .18s;
+}
+.btn--solid{background:var(--brass);color:#0B1418;font-weight:600}
+.btn--solid:hover{background:var(--brass-soft);border-color:var(--brass-soft)}
+.btn--ghost{color:var(--ink);border-color:var(--line)}
+.btn--ghost:hover{border-color:var(--brass);color:var(--brass)}
+
+/* ---------- ledger strip ---------- */
+.ledger{
+  display:grid;gap:1px;background:var(--line-soft);
+  border:1px solid var(--line-soft);border-radius:3px;overflow:hidden;
+  grid-template-columns:repeat(2,1fr);
+}
+@media (min-width:760px){.ledger{grid-template-columns:repeat(4,1fr)}}
+.cell{background:var(--surface);padding:clamp(16px,2.2vw,24px);display:flex;flex-direction:column;gap:.4rem}
+.cell dt{font-family:var(--mono);font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0}
+.cell dd{margin:0;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:clamp(1.05rem,2.1vw,1.5rem);letter-spacing:-.03em;color:var(--ink)}
+.cell dd small{display:block;font-family:var(--sans);font-size:.76rem;letter-spacing:0;color:var(--muted);margin-top:.3rem;line-height:1.4}
+
+/* ---------- chart ---------- */
+.chart-frame{
+  background:var(--surface);border:1px solid var(--line-soft);border-radius:3px;
+  padding:clamp(14px,2vw,22px);margin-block:clamp(24px,3.4vw,38px);
+}
+.chart-scroll{overflow-x:auto}
+#chart{display:block;width:100%;min-width:520px;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:.6rem 1.4rem;margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft)}
+.legend span{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+.swatch{width:16px;height:0;border-top:2px solid currentColor;flex:none}
+.legend .k-run{color:var(--brass)}
+.legend .k-gwr{color:var(--bay)}
+.legend .k-cap{color:var(--muted)}
+
+/* ---------- rungs table ---------- */
+.table-scroll{overflow-x:auto;border:1px solid var(--line-soft);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:.9rem}
+caption{text-align:left;padding:14px clamp(14px,2vw,20px) 0;font-family:var(--mono);font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+th,td{padding:11px clamp(14px,2vw,20px);text-align:left;border-bottom:1px solid var(--line-soft);vertical-align:baseline}
+thead th{font-family:var(--mono);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:500}
+tbody tr:last-child td{border-bottom:0}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em;white-space:nowrap}
+td.n.hot{color:var(--brass)}
+td.note{color:var(--muted);font-size:.85rem}
+tr.is-cap td{background:var(--surface-2)}
+
+/* ---------- calculator ---------- */
+.calc{
+  margin-top:clamp(24px,3.4vw,38px);
+  background:var(--surface-2);border:1px solid var(--line);border-radius:3px;
+  padding:clamp(18px,2.6vw,28px);
+  display:flex;flex-direction:column;gap:1rem;
+}
+.calc-row{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px}
+.field{display:flex;flex-direction:column;gap:.4rem}
+.field label{font-family:var(--mono);font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.field input{
+  font-family:var(--mono);font-size:.95rem;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);border-radius:2px;
+  padding:10px 12px;color-scheme:dark;
+}
+:root[data-theme="light"] .field input{color-scheme:light}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .field input{color-scheme:light}}
+.calc-out{display:flex;flex-direction:column;gap:.35rem;min-width:0}
+.calc-out .big{
+  font-family:var(--mono);font-variant-numeric:tabular-nums;
+  font-size:clamp(1.15rem,2.6vw,1.85rem);letter-spacing:-.03em;color:var(--brass);
+  overflow-wrap:anywhere;
+}
+.calc-out .sub{font-size:.85rem;color:var(--muted)}
+
+/* ---------- facts ---------- */
+.two{display:grid;gap:clamp(28px,4vw,56px);align-items:start}
+@media (min-width:900px){.two{grid-template-columns:1.05fr .95fr}}
+.spec{border-top:1px solid var(--line);margin:0}
+.spec div{
+  display:flex;justify-content:space-between;align-items:baseline;gap:1.2rem;
+  padding:11px 0;border-bottom:1px solid var(--line-soft);
+}
+.spec dt{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.spec dd{margin:0;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:.92rem;text-align:right;color:var(--ink)}
+
+/* ---------- features ---------- */
+.features{display:grid;gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);border-radius:3px;overflow:hidden}
+@media (min-width:760px){.features{grid-template-columns:repeat(3,1fr)}}
+.feat{background:var(--surface);padding:clamp(20px,2.6vw,30px);display:flex;flex-direction:column;gap:.6rem}
+.feat h3{color:var(--ink)}
+.feat p{margin:0;color:var(--muted);font-size:.92rem;max-width:38ch}
+.feat .tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass)}
+
+/* ---------- gallery ---------- */
+.gallery{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
+.shot--hero{grid-column:1/-1}
+@media (min-width:820px){
+  .gallery{grid-template-columns:repeat(6,1fr)}
+  .shot{grid-column:span 2}
+  .shot--wide{grid-column:span 3}
+  .shot--hero{grid-column:1/-1}
+}
+.shot{
+  position:relative;aspect-ratio:4/3;border-radius:3px;overflow:hidden;
+  border:1px solid var(--line-soft);background:var(--surface-2);
+}
+.shot--hero{aspect-ratio:16/7}
+.shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+.ph{
+  position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;
+  gap:.35rem;padding:clamp(12px,1.6vw,18px);
+  background:
+    linear-gradient(160deg,color-mix(in srgb,var(--bay) 12%,transparent),transparent 62%),
+    linear-gradient(20deg,color-mix(in srgb,var(--brass) 9%,transparent),transparent 55%),
+    var(--surface-2);
+}
+.ph svg{position:absolute;inset:0;width:100%;height:100%;color:var(--line);opacity:.85}
+.ph b{position:relative;font-family:var(--sans);font-size:.86rem;font-weight:600;color:var(--ink-dim)}
+.ph i{position:relative;font-family:var(--mono);font-style:normal;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.gallery-note{margin-top:16px;font-size:.85rem;color:var(--muted);max-width:62ch}
+
+/* ---------- media ---------- */
+.press{display:grid;gap:14px}
+@media (min-width:780px){.press{grid-template-columns:repeat(2,1fr)}}
+.clip{
+  display:flex;flex-direction:column;
+  background:var(--surface);border:1px solid var(--line-soft);border-radius:3px;
+  overflow:hidden;text-decoration:none;color:inherit;
+  transition:border-color .18s,transform .18s;
+}
+.clip:hover{border-color:var(--brass-dim);transform:translateY(-2px)}
+.clip-chrome{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 14px;background:var(--surface-2);border-bottom:1px solid var(--line-soft);
+}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--line);flex:none}
+.clip-url{
+  font-family:var(--mono);font-size:.63rem;color:var(--muted);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.clip-body{padding:clamp(16px,2.2vw,22px);display:flex;flex-direction:column;gap:.6rem;flex:1}
+.clip-meta{display:flex;flex-wrap:wrap;gap:.5rem .9rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase}
+.clip-outlet{color:var(--brass)}
+.clip-date{color:var(--muted)}
+.clip h3{font-size:1.02rem}
+.clip blockquote{
+  margin:0;padding-left:14px;border-left:2px solid var(--line);
+  color:var(--muted);font-size:.9rem;
+}
+.clip-more{margin-top:auto;font-family:var(--mono);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.clip:hover .clip-more{color:var(--brass)}
+
+.pullquote{
+  margin:clamp(28px,4vw,48px) 0 0;padding:clamp(22px,3vw,34px);
+  background:var(--surface-2);border-left:2px solid var(--brass);border-radius:0 3px 3px 0;
+}
+.pullquote p{margin:0;font-family:var(--serif);font-size:clamp(1.1rem,2.1vw,1.45rem);line-height:1.36;color:var(--ink)}
+.pullquote footer{margin-top:.9rem;font-family:var(--mono);font-size:.64rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- inquire ---------- */
+.inquire{display:grid;gap:clamp(26px,4vw,52px)}
+@media (min-width:880px){.inquire{grid-template-columns:1fr 1fr}}
+form{display:flex;flex-direction:column;gap:14px}
+form .field input,form .field textarea{
+  font-family:var(--sans);font-size:.95rem;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:11px 13px;
+  width:100%;
+}
+form textarea{resize:vertical;min-height:110px}
+form button{
+  align-self:flex-start;font-family:var(--mono);font-size:.71rem;letter-spacing:.15em;text-transform:uppercase;
+  background:var(--brass);color:#0B1418;font-weight:600;border:1px solid var(--brass);
+  padding:13px 24px;border-radius:2px;cursor:pointer;transition:background .18s;
+}
+form button:hover{background:var(--brass-soft)}
+.form-note{font-size:.8rem;color:var(--muted);margin:0}
+
+/* ---------- footer ---------- */
+.foot{border-top:1px solid var(--line);padding-block:clamp(34px,5vw,58px);background:var(--surface)}
+.foot-in{display:flex;flex-direction:column;gap:1.4rem}
+.foot p{margin:0;font-size:.82rem;color:var(--muted);max-width:78ch}
+.foot a{color:var(--muted)}
+.sources{display:flex;flex-wrap:wrap;gap:.4rem 1.1rem;font-family:var(--mono);font-size:.63rem;letter-spacing:.1em;text-transform:uppercase}
+.sources a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line)}
+.sources a:hover{color:var(--brass);border-bottom-color:var(--brass)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top"><b>4433</b> North Bay Road</a>
+    <div class="nav-links">
+      <a href="#escalation">The Escalation</a>
+      <a href="#residence">The Residence</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#street">The Street</a>
+      <a href="#media">Media</a>
+      <a href="#inquire">Inquire</a>
+    </div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch color theme">Theme</button>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <canvas id="gridcanvas" aria-hidden="true"></canvas>
+  <div class="col hero-in">
+    <div class="hero-top">
+      <p class="addr">4433 North Bay Road <span>·</span> Miami Beach, Florida 33140 <span>· Billionaire's Row</span></p>
+      <h1>The house that outgrew the database.</h1>
+      <p class="lede">A three-bedroom bayfront residence on Miami's richest street. Listed at $7.5&nbsp;million, reset to $11.2&nbsp;million, then raised 50% every business day it went unsold. Seven business days later it had passed the highest advertised home price ever recorded. Then the MLS ran out of digits.</p>
+    </div>
+
+    <div class="readout">
+      <div class="readout-label">
+        <span>Displayed asking price</span>
+        <span class="cap-tick" id="capTick">Field limit reached</span>
+      </div>
+      <div class="readout-scroll">
+        <p class="price" id="priceOut">$7,500,000</p>
+      </div>
+      <p class="readout-note">Stellar MLS <span class="num">TB8474005</span>, as syndicated 7 February 2026. The figure is not a valuation — it is the escalation rule, run until the price field stopped accepting digits.</p>
+    </div>
+
+    <div class="cta-row">
+      <a class="btn btn--solid" href="#inquire">Make an offer</a>
+      <a class="btn btn--ghost" href="#escalation">See the arithmetic</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ LEDGER ============ -->
+<section class="band" aria-label="Listing at a glance">
+  <div class="col">
+    <dl class="ledger">
+      <div class="cell">
+        <dt>Debut price</dt>
+        <dd>$7,500,000<small>16 January 2026, listed flat-fee through Beycome</small></dd>
+      </div>
+      <div class="cell">
+        <dt>Escalation</dt>
+        <dd>+50%<small>Every business day the house remains unsold</small></dd>
+      </div>
+      <div class="cell">
+        <dt>Record to beat</dt>
+        <dd>$165,000,000<small>Highest advertised home price on record, per Guinness World Records</small></dd>
+      </div>
+      <div class="cell">
+        <dt>Residence</dt>
+        <dd>3 bd · 3.5 ba<small>3,534 sq ft on a 6,750 sq ft bayfront lot</small></dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ ESCALATION ============ -->
+<section class="band band--alt" id="escalation">
+  <div class="col">
+    <div class="head">
+      <p class="eyebrow">The Escalation</p>
+      <h2>A price with a schedule instead of an appraisal.</h2>
+      <p class="lede">Most listings drop until someone bites. This one does the opposite, on a fixed rule, in public. Owner Matthew Barnes — founder and chief executive of GO VIP Worldwide — set the terms at the outset: the ask goes up half again as much every business day the house sits.</p>
+    </div>
+
+    <div class="prose">
+      <p>The house came to market on 16 January 2026 at $7,500,000, listed through the flat-fee service Beycome rather than a luxury brokerage. On 27 January, Barnes reset it to $11,200,000 and started the clock. From there the arithmetic did the marketing: ×1.5, every business day, compounding.</p>
+      <p>It cleared $165,000,000 — the highest advertised home price Guinness World Records has on file — inside two weeks. It cleared $288,000,000 the following week. By the time syndication caught up on 7 February, the number had stopped being a price and started being a stress test: different property databases displayed different ceilings, each one the largest integer that particular system could hold.</p>
+    </div>
+
+    <div class="chart-frame">
+      <div class="chart-scroll">
+        <svg id="chart" viewBox="0 0 900 420" role="img" aria-label="Logarithmic chart of the asking price rising 50% per business day from 7.5 million dollars on January 16 to the 999,999,999,999 database ceiling on February 7, crossing the 165 million dollar Guinness record and the 4,294,967,295 integer ceiling along the way."></svg>
+      </div>
+      <div class="legend">
+        <span class="k-run"><i class="swatch"></i>Asking price</span>
+        <span class="k-gwr"><i class="swatch"></i>Guinness record ($165M)</span>
+        <span class="k-cap"><i class="swatch"></i>Database ceilings</span>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <caption>The ladder — reported and reconstructed</caption>
+        <thead>
+          <tr><th scope="col">Date</th><th scope="col">Asking price</th><th scope="col">Step</th><th scope="col">Note</th></tr>
+        </thead>
+        <tbody id="rungs"></tbody>
+      </table>
+    </div>
+
+    <div class="calc">
+      <div class="head" style="margin-bottom:0;gap:.35rem">
+        <p class="eyebrow eyebrow--quiet">Run the rule forward</p>
+        <h3>What would the house cost today?</h3>
+      </div>
+      <div class="calc-row">
+        <div class="field">
+          <label for="dateIn">As of date</label>
+          <input type="date" id="dateIn" min="2026-01-27" max="2036-12-31" value="2026-08-12">
+        </div>
+      </div>
+      <div class="calc-out">
+        <span class="big" id="calcBig">—</span>
+        <span class="sub" id="calcSub">—</span>
+      </div>
+      <p class="form-note">$11,200,000 × 1.5 <sup>business days elapsed since 27 January 2026</sup>. Extrapolation only — no listing service will display it, and no one is asking you to pay it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESIDENCE ============ -->
+<section class="band" id="residence">
+  <div class="col">
+    <div class="head">
+      <p class="eyebrow">The Residence</p>
+      <h2>Underneath the number is an actual house.</h2>
+    </div>
+
+    <div class="two">
+      <div class="prose">
+        <p>Built in 2015 by developer Todd Michael Glaser with architecture by Domo, 4433 North Bay Road is a two-storey contemporary set on an elevated bayfront site — a deliberate choice on a barrier island, and one that increasingly reads as infrastructure rather than styling.</p>
+        <p>Barnes and his wife took it down to the studs in 2025 and rebuilt it as a turn-key acquisition: bespoke furnishings, rare design pieces and the art stay with the house. Before the escalation began, that reimagined residence was brought to market at $9,900,000 — roughly $2,786 per square foot, which is what a serious conversation about this property has historically sounded like.</p>
+        <p>Three bedrooms, three and a half baths, 3,534 square feet on a 6,750 square foot lot. It is not the largest house on North Bay Road. It is, at the moment, the loudest.</p>
+      </div>
+
+      <dl class="spec">
+        <div><dt>Bedrooms</dt><dd>3</dd></div>
+        <div><dt>Bathrooms</dt><dd>3.5</dd></div>
+        <div><dt>Interior</dt><dd>3,534 sq ft</dd></div>
+        <div><dt>Lot</dt><dd>6,750 sq ft</dd></div>
+        <div><dt>Built</dt><dd>2015</dd></div>
+        <div><dt>Reimagined</dt><dd>2025</dd></div>
+        <div><dt>Architecture</dt><dd>Domo</dd></div>
+        <div><dt>Original developer</dt><dd>Todd Michael Glaser</dd></div>
+        <div><dt>Structure</dt><dd>Elevated construction</dd></div>
+        <div><dt>Furnishings</dt><dd>Included, turn-key</dd></div>
+        <div><dt>MLS</dt><dd>TB8474005</dd></div>
+        <div><dt>Listed</dt><dd>16 Jan 2026</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section class="band band--alt" aria-label="Signature features">
+  <div class="col">
+    <div class="head">
+      <p class="eyebrow">Signature</p>
+      <h2>Three things that convey with the house.</h2>
+    </div>
+    <div class="features">
+      <article class="feat">
+        <span class="tag">The Vintner's Wall</span>
+        <h3>A 150-bottle wine gallery behind glass</h3>
+        <p>Climate-controlled and glass-encased, treated as a display wall rather than a cellar — the collection is meant to be looked at from the living space, not visited.</p>
+      </article>
+      <article class="feat">
+        <span class="tag">Poolside</span>
+        <h3>Hand-carved marble lounge chairs</h3>
+        <p>A commissioned pair, carved from solid marble, valued at $50,000. They do not move, which is rather the point of them.</p>
+      </article>
+      <article class="feat">
+        <span class="tag">Structure</span>
+        <h3>Elevated construction</h3>
+        <p>The house sits on raised ground on a barrier island — built for resilience and, in the seller's framing, for generational hold rather than a five-year flip.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section class="band" id="gallery">
+  <div class="col">
+    <div class="head">
+      <p class="eyebrow">Gallery</p>
+      <h2>The property.</h2>
+    </div>
+    <div class="gallery" id="galleryGrid"></div>
+    <p class="gallery-note" id="galleryNote"></p>
+  </div>
+</section>
+
+<!-- ============ STREET ============ -->
+<section class="band band--alt" id="street">
+  <div class="col">
+    <div class="head">
+      <p class="eyebrow">The Street</p>
+      <h2>North Bay Road, or: why any of this works.</h2>
+    </div>
+    <div class="two">
+      <div class="prose">
+        <p>The <em>Wall Street Journal</em> calls North Bay Road "Miami's Richest Road." The stretch holds an estimated $1.7 billion in property value across a single waterfront run, with the bay on one side and a very short list of owners on the other.</p>
+        <p>The immediate neighbours are the reason the stunt has an audience at all: Cindy Crawford; Shutterstock founder Jon Oringer; and David Beckham, whose estate a few doors down traded at roughly $72 million. In February 2026 the average list price on the road was about $25.2 million, up from $11.8 million a year earlier.</p>
+        <p>Put plainly — this is a street where a number nobody believes still gets read by everybody who matters.</p>
+      </div>
+      <dl class="spec">
+        <div><dt>Street value</dt><dd>≈ $1.7B</dd></div>
+        <div><dt>Avg list, Feb 2026</dt><dd>$25,199,167</dd></div>
+        <div><dt>Avg list, Feb 2025</dt><dd>$11,812,500</dd></div>
+        <div><dt>Beckham estate</dt><dd>≈ $72,000,000</dd></div>
+        <div><dt>Frontage</dt><dd>Biscayne Bay</dd></div>
+        <div><dt>Distance to ocean</dt><dd>&lt; 1 mile</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MEDIA ============ -->
+<section class="band" id="media">
+  <div class="col">
+    <div class="head">
+      <p class="eyebrow">Media</p>
+      <h2>The press coverage.</h2>
+      <p class="lede">The listing has been covered as a pricing story, a records story and a database story — sometimes all three in the same piece. Every card below links to the original.</p>
+    </div>
+
+    <div class="press" id="press"></div>
+
+    <figure class="pullquote">
+      <p>"Listing a property is about good faith, ethics and judgment. Even while the world watches this spectacle unfold, serious offers need to be weighed carefully — and it's a delicate balancing act."</p>
+      <footer>Matthew Barnes, owner — as reported by HousingWire</footer>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ INQUIRE ============ -->
+<section class="band band--alt" id="inquire">
+  <div class="col">
+    <div class="head">
+      <p class="eyebrow">Inquire</p>
+      <h2>Serious offers are read. All of them.</h2>
+      <p class="lede">The escalating figure is the campaign. The conversation is separate, private and, per the seller, active — buyer interest has been described as "off the charts." Offers below the displayed ask are expected and reviewed on their merits.</p>
+    </div>
+
+    <div class="inquire">
+      <form id="inquiryForm">
+        <div class="field">
+          <label for="fName">Name</label>
+          <input id="fName" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="fEmail">Email</label>
+          <input id="fEmail" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="fOffer">Offer or interest (optional)</label>
+          <input id="fOffer" name="offer" type="text" inputmode="numeric" placeholder="$">
+        </div>
+        <div class="field">
+          <label for="fMsg">Message</label>
+          <textarea id="fMsg" name="message" required></textarea>
+        </div>
+        <button type="submit">Send inquiry</button>
+        <p class="form-note">Opens your email client with the message prefilled. Nothing is transmitted from this page.</p>
+      </form>
+
+      <dl class="spec">
+        <div><dt>Address</dt><dd>4433 N Bay Rd</dd></div>
+        <div><dt>City</dt><dd>Miami Beach, FL 33140</dd></div>
+        <div><dt>MLS number</dt><dd>TB8474005</dd></div>
+        <div><dt>Listing service</dt><dd>Beycome (flat-fee)</dd></div>
+        <div><dt>Debut price</dt><dd>$7,500,000</dd></div>
+        <div><dt>Pre-escalation ask</dt><dd>$9,900,000</dd></div>
+        <div><dt>Showings</dt><dd>By appointment</dd></div>
+        <div><dt>Owner financing</dt><dd>Considered</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="col foot-in">
+    <p><strong>About this page.</strong> An independent marketing site for 4433 North Bay Road, Miami Beach. Property details, prices and quotations are compiled from public MLS syndication and published press coverage, and are believed accurate as reported; they are not warranted. Square footage is stated as 3,534 sq ft in MLS records and 3,553 sq ft in the owner's release. The displayed asking price reflects the seller's published escalation rule, not an appraisal, valuation or offer of sale. Nothing here is an offer to sell or a solicitation in any jurisdiction where such an offer would be unlawful.</p>
+    <p>Prices, availability and terms are subject to change or withdrawal without notice. Equal Housing Opportunity.</p>
+    <div class="sources">
+      <span style="color:var(--muted)">Sources:</span>
+      <a href="https://www.housingwire.com/articles/miami-home-50-percent-price-hikes/" target="_blank" rel="noopener">HousingWire</a>
+      <a href="https://www.realtor.com/news/unique-homes/miami-beach-billionaires-row-mansion-daily-price-increase/" target="_blank" rel="noopener">Realtor.com</a>
+      <a href="https://www.under30ceo.com/barnes-debuts-9-9-million-turn-key-residence-on-miami-beachs-famed-north-bay-road/" target="_blank" rel="noopener">Under30CEO</a>
+      <a href="https://www.raveis.com/eprop/TB8474005/4433-n-bay-road-miami-beach-fl-33140" target="_blank" rel="noopener">William Raveis</a>
+      <a href="https://www.redfin.com/FL/Miami-Beach/4433-N-Bay-Rd-33140/home/42785035" target="_blank" rel="noopener">Redfin</a>
+      <a href="https://www.guinnessworldrecords.com/" target="_blank" rel="noopener">Guinness World Records</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+"use strict";
+
+/* ---------------------------------------------------------------
+   CONFIGURE ME — replace before this goes live
+   --------------------------------------------------------------- */
+const INQUIRY_EMAIL = "inquiries@example.com";
+
+/* ---------------------------------------------------------------
+   1. Theme toggle — writes data-theme so it beats the OS setting
+   --------------------------------------------------------------- */
+(function themeToggle(){
+  const btn = document.getElementById("themeBtn");
+  const root = document.documentElement;
+  btn.addEventListener("click", () => {
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const current = root.getAttribute("data-theme") || (prefersDark ? "dark" : "light");
+    root.setAttribute("data-theme", current === "dark" ? "light" : "dark");
+    drawGrid();
+    drawChart();
+  });
+})();
+
+/* ---------------------------------------------------------------
+   2. Number formatting — short scale, all the way up
+   --------------------------------------------------------------- */
+const SCALES = [
+  [1e33,"decillion"],[1e30,"nonillion"],[1e27,"octillion"],[1e24,"septillion"],
+  [1e21,"sextillion"],[1e18,"quintillion"],[1e15,"quadrillion"],[1e12,"trillion"],
+  [1e9,"billion"],[1e6,"million"]
+];
+
+function commas(n){
+  return "$" + Math.round(n).toLocaleString("en-US");
+}
+function named(n){
+  for (const [mag, word] of SCALES){
+    // 0.9995 so a value that would print as "$1,000 billion" promotes to "$1 trillion"
+    if (n >= mag * 0.9995) {
+      const v = n / mag;
+      return "$" + v.toLocaleString("en-US",{maximumFractionDigits: v < 10 ? 2 : 1}) + " " + word;
+    }
+  }
+  return commas(n);
+}
+function scientific(n){
+  const e = Math.floor(Math.log10(n));
+  return "$" + (n / Math.pow(10,e)).toFixed(3) + " × 10^" + e;
+}
+function bigMoney(n){
+  if (!isFinite(n)) return "beyond floating point";
+  return n >= 1e36 ? scientific(n) : named(n);
+}
+
+/* ---------------------------------------------------------------
+   3. The escalation model
+      $11.2M on 27 Jan 2026, x1.5 each business day thereafter.
+   --------------------------------------------------------------- */
+const BASE_PRICE = 11_200_000;
+const BASE_DATE  = Date.UTC(2026, 0, 27);   // 27 January 2026, a Tuesday
+const FACTOR     = 1.5;
+
+const DAY = 86400000;
+function businessDaysSince(msTarget){
+  if (msTarget <= BASE_DATE) return 0;
+  const start = BASE_DATE + DAY;                       // first day that can escalate
+  const span  = Math.floor((msTarget - start) / DAY) + 1;
+  if (span <= 0) return 0;
+  const startDow = new Date(start).getUTCDay();
+  const weeks = Math.floor(span / 7);
+  let count = weeks * 5;
+  for (let i = 0; i < span - weeks * 7; i++){
+    const d = (startDow + i) % 7;
+    if (d !== 0 && d !== 6) count++;
+  }
+  return count;
+}
+function askOn(msTarget){
+  return BASE_PRICE * Math.pow(FACTOR, businessDaysSince(msTarget));
+}
+
+/* The reported + reconstructed ladder. `reported` marks figures that
+   appear in press coverage or syndicated listings rather than the model. */
+const RUNGS = [
+  {d:"2026-01-16", price:7_500_000,       note:"Debut. Listed flat-fee through Beycome.", reported:true},
+  {d:"2026-01-27", price:11_200_000,      note:"Reset. The escalation rule begins.",      reported:true},
+  {d:"2026-01-28", price:16_800_000,      note:""},
+  {d:"2026-01-29", price:25_200_000,      note:""},
+  {d:"2026-01-30", price:37_800_000,      note:""},
+  {d:"2026-02-02", price:56_700_000,      note:""},
+  {d:"2026-02-03", price:85_050_000,      note:""},
+  {d:"2026-02-04", price:127_575_000,     note:""},
+  {d:"2026-02-05", price:191_362_500,     note:"Passes the $165M Guinness record.",       flag:"gwr"},
+  {d:"2026-02-06", price:287_043_750,     note:"Reported as “over $288 million.”", reported:true},
+  {d:"2026-02-07", price:4_294_967_295,   note:"Some syndicators cap here — 2³² − 1, the largest 32-bit integer.", reported:true, cap:true},
+  {d:"2026-02-07", price:999_999_999_999, note:"Stellar MLS displays the largest number its price field holds.", reported:true, cap:true}
+];
+
+const fmtDate = ms => new Date(ms).toLocaleDateString("en-US",{month:"short", day:"numeric", year:"numeric", timeZone:"UTC"});
+const parseD  = s => { const [y,m,d] = s.split("-").map(Number); return Date.UTC(y, m-1, d); };
+
+/* ---------------------------------------------------------------
+   4. Hero readout — counts up the real ladder, then hits the wall
+   --------------------------------------------------------------- */
+(function heroCounter(){
+  const out  = document.getElementById("priceOut");
+  const tick = document.getElementById("capTick");
+  const finalPrice = 999_999_999_999;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (reduce){
+    out.textContent = commas(finalPrice);
+    tick.classList.add("on");
+    return;
+  }
+
+  const steps = RUNGS.map(r => r.price);
+  let i = 0;
+  const advance = () => {
+    out.textContent = commas(steps[i]);
+    i++;
+    if (i < steps.length){
+      // ease out: early rungs snap, the last few land
+      const delay = 110 + (i / steps.length) * 210;
+      setTimeout(advance, delay);
+    } else {
+      tick.classList.add("on");
+    }
+  };
+  setTimeout(advance, 450);
+})();
+
+/* ---------------------------------------------------------------
+   5. Hero background — a faint log-scale grid, drawn to the theme
+   --------------------------------------------------------------- */
+const gridCanvas = document.getElementById("gridcanvas");
+
+function themeColors(){
+  const cs = getComputedStyle(document.documentElement);
+  return {
+    line:    cs.getPropertyValue("--line").trim(),
+    soft:    cs.getPropertyValue("--line-soft").trim(),
+    surface: cs.getPropertyValue("--surface").trim(),
+    muted: cs.getPropertyValue("--muted").trim(),
+    brass: cs.getPropertyValue("--brass").trim(),
+    bay:   cs.getPropertyValue("--bay").trim(),
+    ink:   cs.getPropertyValue("--ink").trim()
+  };
+}
+
+function drawGrid(){
+  const c = gridCanvas;
+  const rect = c.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  c.width  = Math.round(rect.width  * dpr);
+  c.height = Math.round(rect.height * dpr);
+  const g = c.getContext("2d");
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  g.clearRect(0, 0, rect.width, rect.height);
+
+  const { line } = themeColors();
+  g.strokeStyle = line;
+  g.lineWidth = 1;
+
+  // decade lines, each subdivided 2..9 — a log ruler running up the page
+  const decades = 7;
+  const band = rect.height / decades;
+  for (let d = 0; d < decades; d++){
+    const top = rect.height - (d + 1) * band;
+    g.globalAlpha = 0.55;
+    g.beginPath();
+    g.moveTo(0, Math.round(top) + 0.5);
+    g.lineTo(rect.width, Math.round(top) + 0.5);
+    g.stroke();
+    g.globalAlpha = 0.16;
+    for (let m = 2; m < 10; m++){
+      const y = rect.height - (d + Math.log10(m)) * band;
+      g.beginPath();
+      g.moveTo(0, Math.round(y) + 0.5);
+      g.lineTo(rect.width, Math.round(y) + 0.5);
+      g.stroke();
+    }
+  }
+  g.globalAlpha = 1;
+}
+
+/* ---------------------------------------------------------------
+   6. The chart — log-scale step plot punching through three ceilings
+   --------------------------------------------------------------- */
+const NS = "http://www.w3.org/2000/svg";
+function el(name, attrs, text){
+  const n = document.createElementNS(NS, name);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  if (text != null) n.textContent = text;
+  return n;
+}
+
+function drawChart(){
+  const svg = document.getElementById("chart");
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+  const C = themeColors();
+  const W = 900, H = 420;
+  const pad = { l: 78, r: 128, t: 24, b: 46 };
+  const plotW = W - pad.l - pad.r;
+  const plotH = H - pad.t - pad.b;
+
+  const yMin = 1e6, yMax = 2e12;
+  const ly = v => pad.t + plotH * (1 - (Math.log10(v) - Math.log10(yMin)) / (Math.log10(yMax) - Math.log10(yMin)));
+
+  const points = RUNGS.filter(r => !r.cap || r.price === 999_999_999_999);
+  const xMin = parseD("2026-01-16"), xMax = parseD("2026-02-09");
+  const lx = ms => pad.l + plotW * ((ms - xMin) / (xMax - xMin));
+
+  // y gridlines, one per decade
+  const UNITS = ["M","B","T"];
+  for (let e = 6; e <= 12; e++){
+    const y = ly(Math.pow(10, e));
+    svg.appendChild(el("line", { x1: pad.l, y1: y, x2: pad.l + plotW, y2: y, stroke: C.soft, "stroke-width": 1 }));
+    svg.appendChild(el("text", {
+      x: pad.l - 10, y: y + 4, "text-anchor": "end",
+      fill: C.muted, "font-size": 11, "font-family": "ui-monospace, monospace"
+    }, "$" + Math.pow(10, (e - 6) % 3) + UNITS[Math.floor((e - 6) / 3)]));
+  }
+
+  // the three ceilings the price ran into
+  const ceilings = [
+    { v: 165_000_000,     label: "Guinness record",   short: "$165,000,000",     color: C.bay },
+    { v: 4_294_967_295,   label: "32-bit ceiling",    short: "$4,294,967,295",   color: C.muted },
+    { v: 999_999_999_999, label: "MLS field ceiling", short: "$999,999,999,999", color: C.muted }
+  ];
+  for (const c of ceilings){
+    const y = ly(c.v);
+    svg.appendChild(el("line", {
+      x1: pad.l, y1: y, x2: pad.l + plotW, y2: y,
+      stroke: c.color, "stroke-width": 1.5, "stroke-dasharray": "5 5", opacity: .9
+    }));
+    svg.appendChild(el("text", {
+      x: pad.l + plotW + 8, y: y - 4, fill: c.color,
+      "font-size": 10.5, "font-family": "ui-monospace, monospace", "letter-spacing": ".06em"
+    }, c.label));
+    svg.appendChild(el("text", {
+      x: pad.l + plotW + 8, y: y + 10, fill: C.muted,
+      "font-size": 10, "font-family": "ui-monospace, monospace"
+    }, c.short));
+  }
+
+  // x axis ticks
+  for (const d of ["2026-01-16","2026-01-23","2026-01-30","2026-02-06"]){
+    const ms = parseD(d), x = lx(ms);
+    svg.appendChild(el("line", { x1: x, y1: pad.t + plotH, x2: x, y2: pad.t + plotH + 5, stroke: C.line, "stroke-width": 1 }));
+    svg.appendChild(el("text", {
+      x, y: pad.t + plotH + 22, "text-anchor": "middle", fill: C.muted,
+      "font-size": 11, "font-family": "ui-monospace, monospace"
+    }, new Date(ms).toLocaleDateString("en-US",{month:"short",day:"numeric",timeZone:"UTC"})));
+  }
+
+  // stepped path — a price that holds flat then jumps is a staircase, not a curve
+  let dAttr = "";
+  points.forEach((p, i) => {
+    const x = lx(parseD(p.d)), y = ly(p.price);
+    if (i === 0){ dAttr += `M ${x} ${y}`; }
+    else {
+      const prevY = ly(points[i-1].price);
+      dAttr += ` L ${x} ${prevY} L ${x} ${y}`;
+    }
+  });
+  svg.appendChild(el("path", {
+    d: dAttr, fill: "none", stroke: C.brass, "stroke-width": 2.25,
+    "stroke-linejoin": "round", "stroke-linecap": "round"
+  }));
+
+  // markers
+  points.forEach(p => {
+    const x = lx(parseD(p.d)), y = ly(p.price);
+    svg.appendChild(el("circle", {
+      cx: x, cy: y, r: p.reported ? 4 : 2.6,
+      fill: p.reported ? C.brass : C.surface,
+      stroke: C.brass, "stroke-width": 1.5
+    }));
+  });
+
+  // annotate the ends
+  const first = points[0], last = points[points.length - 1];
+  svg.appendChild(el("text", {
+    x: lx(parseD(first.d)) + 8, y: ly(first.price) + 16,
+    fill: C.ink, "font-size": 11.5, "font-family": "ui-monospace, monospace"
+  }, "$7.5M · Jan 16"));
+  svg.appendChild(el("text", {
+    x: lx(parseD(last.d)) - 8, y: ly(last.price) - 12, "text-anchor": "end",
+    fill: C.brass, "font-size": 11.5, "font-family": "ui-monospace, monospace"
+  }, "$999,999,999,999 · Feb 7"));
+}
+
+/* ---------------------------------------------------------------
+   7. Ladder table
+   --------------------------------------------------------------- */
+(function buildRungs(){
+  const tb = document.getElementById("rungs");
+  RUNGS.forEach((r, i) => {
+    const tr = document.createElement("tr");
+    if (r.cap) tr.className = "is-cap";
+
+    const prev = i > 0 ? RUNGS[i-1].price : null;
+    let step = "—";
+    if (prev && r.price > prev){
+      const mult = r.price / prev;
+      step = Math.abs(mult - 1.5) < 0.001 ? "× 1.5" : "× " + mult.toLocaleString("en-US",{maximumFractionDigits:1});
+    }
+
+    tr.innerHTML =
+      '<td class="n">' + fmtDate(parseD(r.d)) + '</td>' +
+      '<td class="n' + (r.cap ? " hot" : "") + '">' + commas(r.price) + '</td>' +
+      '<td class="n">' + step + '</td>' +
+      '<td class="note"></td>';
+    tr.lastElementChild.textContent = r.note;
+    tb.appendChild(tr);
+  });
+})();
+
+/* ---------------------------------------------------------------
+   8. Calculator
+   --------------------------------------------------------------- */
+(function calculator(){
+  const input = document.getElementById("dateIn");
+  const big   = document.getElementById("calcBig");
+  const sub   = document.getElementById("calcSub");
+
+  const MLS_CAP = 999_999_999_999;
+  const capDay  = Math.ceil(Math.log(MLS_CAP / BASE_PRICE) / Math.log(FACTOR));
+
+  function update(){
+    if (!input.value){ big.textContent = "—"; sub.textContent = "Pick a date."; return; }
+    const ms = parseD(input.value);
+    const days = businessDaysSince(ms);
+    const price = askOn(ms);
+    big.textContent = bigMoney(price);
+    sub.textContent = days === 0
+      ? "Day zero — the reset price, before any escalation."
+      : days + " business day" + (days === 1 ? "" : "s") + " of escalation · ×1.5 compounded · "
+        + (price > MLS_CAP
+            ? "past the MLS field ceiling since business day " + capDay
+            : "still inside the MLS price field");
+  }
+
+  input.addEventListener("input", update);
+  update();
+})();
+
+/* ---------------------------------------------------------------
+   9. Gallery — real photos when present, designed slots when not
+   --------------------------------------------------------------- */
+const SHOTS = [
+  { file:"01-front-elevation.jpg",  alt:"Front elevation of 4433 North Bay Road",       cap:"Front elevation",            cls:"shot--hero" },
+  { file:"02-bay-rear.jpg",         alt:"Rear of the house facing Biscayne Bay",        cap:"Bay elevation",              cls:"shot--wide" },
+  { file:"03-pool-terrace.jpg",     alt:"Pool terrace with marble lounge chairs",       cap:"Pool terrace",               cls:"shot--wide" },
+  { file:"04-great-room.jpg",       alt:"Double-height great room",                     cap:"Great room",                 cls:"" },
+  { file:"05-kitchen.jpg",          alt:"Kitchen",                                      cap:"Kitchen",                    cls:"" },
+  { file:"06-vintners-wall.jpg",    alt:"The Vintner's Wall wine gallery",              cap:"The Vintner's Wall",         cls:"" },
+  { file:"07-primary-suite.jpg",    alt:"Primary bedroom suite",                        cap:"Primary suite",              cls:"" },
+  { file:"08-dock.jpg",             alt:"Private dock on Biscayne Bay",                 cap:"Dock & waterfront",          cls:"" },
+  { file:"09-aerial.jpg",           alt:"Aerial view of North Bay Road",                cap:"Aerial, North Bay Road",     cls:"" }
+];
+
+(function buildGallery(){
+  const grid = document.getElementById("galleryGrid");
+  const note = document.getElementById("galleryNote");
+  let missing = 0;
+
+  SHOTS.forEach((s, i) => {
+    const fig = document.createElement("figure");
+    fig.className = "shot " + s.cls;
+    fig.style.margin = "0";
+
+    const ph = document.createElement("div");
+    ph.className = "ph";
+    ph.innerHTML =
+      '<svg viewBox="0 0 200 150" preserveAspectRatio="none" aria-hidden="true">' +
+        '<path d="M0 ' + (104 + (i % 3) * 6) + ' H200" stroke="currentColor" stroke-width="1" fill="none"/>' +
+        '<path d="M28 104 V' + (58 + (i % 4) * 7) + ' H92 V104" stroke="currentColor" stroke-width="1" fill="none"/>' +
+        '<path d="M92 ' + (72 + (i % 4) * 5) + ' H158 V104" stroke="currentColor" stroke-width="1" fill="none"/>' +
+        '<path d="M44 104 V86 H68 V104" stroke="currentColor" stroke-width="1" fill="none"/>' +
+      '</svg>';
+    const b = document.createElement("b"); b.textContent = s.cap;
+    const em = document.createElement("i"); em.textContent = "Photo pending";
+    ph.appendChild(b); ph.appendChild(em);
+    fig.appendChild(ph);
+
+    const img = document.createElement("img");
+    img.alt = s.alt;
+    img.loading = "lazy";
+    img.decoding = "async";
+    img.addEventListener("error", () => { img.remove(); missing++; render(); });
+    img.src = "photos/" + s.file;
+    fig.appendChild(img);
+
+    grid.appendChild(fig);
+  });
+
+  function render(){
+    note.textContent = missing === 0
+      ? ""
+      : missing + " of " + SHOTS.length + " images are placeholders. Drop the photographs into /photos using the filenames in photos/README.md and they appear here automatically — no code changes needed.";
+  }
+  render();
+})();
+
+/* ---------------------------------------------------------------
+   10. Press clippings
+   --------------------------------------------------------------- */
+const PRESS = [
+  {
+    outlet:"HousingWire", date:"February 2026",
+    title:"Miami home on Billionaire’s Row looks to set record with 50% daily price hikes",
+    quote:"As of Wednesday, the asking price of the 3,534 square foot, three-bedroom, three-and-a-half bath house was over $288 million, as a result of homeowner Matthew Barnes raising the asking price 50% each business day the property remains on the market.",
+    url:"https://www.housingwire.com/articles/miami-home-50-percent-price-hikes/"
+  },
+  {
+    outlet:"Realtor.com", date:"2026",
+    title:"Miami Beach Billionaire’s Row mansion raises its price every single day",
+    quote:"The listing that turned a daily price increase into a marketing engine — and put a three-bedroom North Bay Road house in front of an audience sized for a $200 million estate.",
+    url:"https://www.realtor.com/news/unique-homes/miami-beach-billionaires-row-mansion-daily-price-increase/"
+  },
+  {
+    outlet:"Note Servicing Center", date:"February 2026",
+    title:"Miami Home on Billionaire’s Row Aims for Record with Daily Price Increases",
+    quote:"The listing already exceeds the highest advertised home price valuation ever recorded in the U.S., which currently stands at $165 million, according to Guinness World Records.",
+    url:"https://noteservicingcenter.com/miami-home-on-billionaires-row-aims-for-record-with-daily-price-increases/"
+  },
+  {
+    outlet:"Under30CEO", date:"2025",
+    title:"Barnes Debuts $9.9 Million Turn-Key Residence on Miami Beach’s Famed North Bay Road",
+    quote:"A climate-controlled, glass-encased 150-bottle wine gallery — “The Vintner’s Wall” — and $50,000 hand-carved marble poolside lounge chairs convey with the house, on a road the Wall Street Journal calls “Miami’s Richest Road.”",
+    url:"https://www.under30ceo.com/barnes-debuts-9-9-million-turn-key-residence-on-miami-beachs-famed-north-bay-road/"
+  },
+  {
+    outlet:"William Raveis", date:"Listing syndication",
+    title:"$999,999,999,999 — 4433 N Bay Road, Miami Beach, FL 33140",
+    quote:"The syndicated headline price, displayed exactly as the MLS transmitted it: twelve nines, the largest number the price field will accept.",
+    url:"https://www.raveis.com/eprop/TB8474005/4433-n-bay-road-miami-beach-fl-33140"
+  },
+  {
+    outlet:"Guinness World Records", date:"Standing record",
+    title:"Highest advertised price for a residential property",
+    quote:"The benchmark the listing set out to break, and the reason the escalation has a finish line at all rather than running purely as spectacle.",
+    url:"https://www.guinnessworldrecords.com/"
+  }
+];
+
+(function buildPress(){
+  const wrap = document.getElementById("press");
+  PRESS.forEach(p => {
+    const a = document.createElement("a");
+    a.className = "clip";
+    a.href = p.url;
+    a.target = "_blank";
+    a.rel = "noopener";
+
+    let host;
+    try { host = new URL(p.url).hostname.replace(/^www\./, ""); } catch { host = p.url; }
+
+    const chrome = document.createElement("div");
+    chrome.className = "clip-chrome";
+    chrome.innerHTML = '<i class="dot"></i><i class="dot"></i><i class="dot"></i>';
+    const url = document.createElement("span");
+    url.className = "clip-url";
+    url.textContent = host;
+    chrome.appendChild(url);
+
+    const body = document.createElement("div");
+    body.className = "clip-body";
+
+    const meta = document.createElement("div");
+    meta.className = "clip-meta";
+    const o = document.createElement("span"); o.className = "clip-outlet"; o.textContent = p.outlet;
+    const d = document.createElement("span"); d.className = "clip-date";   d.textContent = p.date;
+    meta.appendChild(o); meta.appendChild(d);
+
+    const h = document.createElement("h3"); h.textContent = p.title;
+    const q = document.createElement("blockquote"); q.textContent = p.quote;
+    const m = document.createElement("span"); m.className = "clip-more"; m.textContent = "Read at " + host + " →";
+
+    body.appendChild(meta); body.appendChild(h); body.appendChild(q); body.appendChild(m);
+    a.appendChild(chrome); a.appendChild(body);
+    wrap.appendChild(a);
+  });
+})();
+
+/* ---------------------------------------------------------------
+   11. Inquiry form -> mailto
+   --------------------------------------------------------------- */
+document.getElementById("inquiryForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const f = e.target;
+  const offer = f.offer.value.trim();
+  const body =
+    "Name: " + f.name.value + "\n" +
+    "Email: " + f.email.value + "\n" +
+    (offer ? "Offer / interest: " + offer + "\n" : "") +
+    "\n" + f.message.value + "\n\n" +
+    "— Sent from the 4433 North Bay Road listing page";
+  window.location.href =
+    "mailto:" + INQUIRY_EMAIL +
+    "?subject=" + encodeURIComponent("Inquiry — 4433 North Bay Road, Miami Beach") +
+    "&body=" + encodeURIComponent(body);
+});
+
+/* ---------------------------------------------------------------
+   12. Paint + keep in sync
+   --------------------------------------------------------------- */
+drawGrid();
+drawChart();
+
+let resizeTimer;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => { drawGrid(); drawChart(); }, 120);
+});
+
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+  if (!document.documentElement.hasAttribute("data-theme")) { drawGrid(); drawChart(); }
+});
+</script>
+</body>
+</html>
